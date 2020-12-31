@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
@@ -10,14 +10,14 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 */
 
 // подключаемся к серверу mongo
-mongoose.connect('mongodb://localhost:27017/mestodb_full', {
+mongoose.connect('mongodb://localhost:27017/news-explorer_db', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
 
-// const router = require('./routes');
+const router = require('./routes');
 
 // Слушаем 3030 порт
 const { PORT = 3030 } = process.env;
@@ -49,7 +49,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-// app.use('/', router);
+app.use('/', router);
 
 /* обработчики ошибок
 подключаем логгер ошибок (его нужно подключить после обработчиков роутов и до обработчиков ошибок)
