@@ -1,5 +1,4 @@
 const { celebrate, Joi } = require('celebrate');
-const isUrl = require('mongoose');
 
 const validateArticle = celebrate({
   body: Joi.object().keys({
@@ -8,7 +7,7 @@ const validateArticle = celebrate({
     text: Joi.string().required().min(3),
     date: Joi.string().required().min(10),
     source: Joi.string().required().min(3),
-    link: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
+    link: Joi.string().uri().required(),
     image: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
   }).unknown(true),
 });

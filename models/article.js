@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validate = require('validator');
 
 const {
   requiredTrue,
@@ -39,9 +40,9 @@ const articleSchema = new mongoose.Schema({
     type: String,
     cast: castTypeMessage,
     required: requiredTrue,
-    validate: { // опишем свойство validate
+    validate: {
       validator(v) {
-        return /^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/.test(v);
+        return validate.isURL(v);
       },
       message: linkErrorMessage, // когда validator вернёт false, будет использовано это сообщение
     },

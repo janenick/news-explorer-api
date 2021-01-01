@@ -1,13 +1,13 @@
 const express = require('express');
-// const cors = require('cors');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // const { errors } = require('celebrate');
-const celebrateErrorHandler = require('./middlewares/celebrateValidation/celebrateErrorHandler');
 const helmet = require('helmet');
+const celebrateErrorHandler = require('./middlewares/celebrateValidation/celebrateErrorHandler');
 require('dotenv').config();
 const errorHandler = require('./middlewares/errorHandler');
-// const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/news-explorer_db', {
@@ -24,6 +24,7 @@ const { PORT = 3030 } = process.env;
 const app = express();
 
 // --> настройки cors
+app.use(cors());
 /* const allowedCors = [
   'https://janenick.students.nomoredomains.rocks',
   'http://janenick.students.nomoredomains.rocks',
@@ -41,7 +42,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // подключаем логгер запросов (его нужно подключить до всех обработчиков роутов)
-// app.use(requestLogger);
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -51,7 +52,7 @@ app.get('/crash-test', () => {
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '5fedf401fff0af6538c14433' // вставьте сюда _id созданного в предыдущем пункте пользователя
+    _id: '5fedf401fff0af6538c14433', // вставьте сюда _id созданного в предыдущем пункте пользователя
   };
 
   next();
@@ -62,7 +63,7 @@ app.use('/', router);
 /* обработчики ошибок
 подключаем логгер ошибок (его нужно подключить после обработчиков роутов и до обработчиков ошибок)
 */
-// app.use(errorLogger);
+app.use(errorLogger);
 // app.use(errors()); // обработчик ошибок celebrate
 app.use(celebrateErrorHandler);
 
