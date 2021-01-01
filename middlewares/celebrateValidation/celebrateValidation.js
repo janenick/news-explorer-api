@@ -1,9 +1,15 @@
 const { celebrate, Joi } = require('celebrate');
+const isUrl = require('mongoose');
 
-const validateCard = celebrate({
+const validateArticle = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
+    keyword: Joi.string().required().min(3),
+    title: Joi.string().required().min(3),
+    text: Joi.string().required().min(3),
+    date: Joi.string().required().min(10),
+    source: Joi.string().required().min(3),
     link: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
+    image: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
   }).unknown(true),
 });
 
@@ -17,6 +23,7 @@ const validateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
+    name: Joi.string().min(2).max(30),
   }),
 });
 
@@ -25,8 +32,6 @@ const validateUserRegister = celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/),
   }),
 });
 
@@ -36,9 +41,8 @@ const validateId = celebrate({
   }),
 });
 
-
 module.exports = {
-  validateCard,
+  validateArticle,
   validateArticleId,
   validateUser,
   validateUserRegister,

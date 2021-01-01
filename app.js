@@ -2,7 +2,8 @@ const express = require('express');
 // const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { errors } = require('celebrate');
+// const { errors } = require('celebrate');
+const celebrateErrorHandler = require('./middlewares/celebrateValidation/celebrateErrorHandler');
 const helmet = require('helmet');
 require('dotenv').config();
 const errorHandler = require('./middlewares/errorHandler');
@@ -62,7 +63,8 @@ app.use('/', router);
 подключаем логгер ошибок (его нужно подключить после обработчиков роутов и до обработчиков ошибок)
 */
 // app.use(errorLogger);
-app.use(errors()); // обработчик ошибок celebrate
+// app.use(errors()); // обработчик ошибок celebrate
+app.use(celebrateErrorHandler);
 
 app.use(errorHandler);
 

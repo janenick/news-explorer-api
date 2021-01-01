@@ -22,6 +22,7 @@ module.exports.getUserById = (req, res, next) => {
     .catch(next);
 };
 
+// контроллер getUserMe находит пользователя по token
 module.exports.getUserMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
