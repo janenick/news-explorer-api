@@ -24,16 +24,15 @@ const { PORT = 3030 } = process.env;
 const app = express();
 
 // --> настройки cors
-app.use(cors());
-/* const allowedCors = [
-  'https://janenick.students.nomoredomains.rocks',
-  'http://janenick.students.nomoredomains.rocks',
+// app.use(cors());
+const allowedCors = [
+  'https://janenick-news-explorer.students.nomoredomains.monster',
+  'http://janenick-news-explorer.students.nomoredomains.monster',
   'http://localhost:3000',
 ];
 app.use(cors({
   origin: allowedCors,
 }));
-*/
 // <-- настройки cors
 
 app.use(helmet()); // для простановки security-заголовков для API
@@ -48,14 +47,6 @@ app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
-});
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5fedf401fff0af6538c14433', // вставьте сюда _id созданного в предыдущем пункте пользователя
-  };
-
-  next();
 });
 
 app.use('/', router);
