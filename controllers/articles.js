@@ -32,8 +32,8 @@ module.exports.createArticle = (req, res, next) => {
     image,
     owner: req.user._id,
   })
-    .then((article) => res.send({ article }))
-    .catch((err) => errorHandler(err, next));
+    .then((article) => res.status(201).send({ article }))
+    .catch((err) => next(errorHandler(err, next)));
 };
 
 module.exports.deleteArticle = (req, res, next) => {

@@ -1,5 +1,5 @@
 const articlesRouter = require('express').Router();
-// const { validateCard, validateСardId } = require('../middlewares/celebrateValidation');
+const { validateArticleId } = require('../middlewares/celebrateValidation');
 
 const {
   getArticles,
@@ -11,10 +11,9 @@ articlesRouter.get('/', getArticles);
 
 articlesRouter.post('/', createArticle);
 
-articlesRouter.delete('/:cardId', deleteArticle);
+articlesRouter.delete('/:articleId', validateArticleId, deleteArticle);
 /* cardsRouter.post('/', validateCard, createCard);
 
-cardsRouter.delete('/:cardId', validateСardId, deleteCard);
 */
 
 module.exports = articlesRouter;

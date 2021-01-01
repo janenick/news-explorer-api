@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const {
   requiredTrue,
-  castTypeMessage,
   linkErrorMessage,
+  castTypeMessage,
 } = require('../utils/validatonMessages');
 
 const articleSchema = new mongoose.Schema({
