@@ -1,5 +1,5 @@
 const usersRouter = require('express').Router();
-// const { validateId } = require('../middlewares/celebrateValidation');
+const { validateId } = require('../middlewares/celebrateValidation/celebrateValidation');
 
 const {
   getUsers,
@@ -11,7 +11,6 @@ usersRouter.get('/', getUsers);
 
 usersRouter.get('/me', getUserMe);
 
-usersRouter.get('/:id', getUserById);
-// usersRouter.get('/:id', validateId, getUserById);
+usersRouter.get('/:id', validateId, getUserById);
 
 module.exports = usersRouter;

@@ -2,7 +2,7 @@ const {
   JWT_SECRET = 'JWT_SECRET',
   NODE_ENV,
   PORT = 3030,
-  MONGODB = 'mongodb://localhost:27017/news-explorer-db',
+  MONGODB = 'mongodb://localhost:27017/db_news-explorer',
 } = process.env;
 
 const allowedCors = [
