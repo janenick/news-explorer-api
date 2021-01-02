@@ -6,6 +6,7 @@ const {
   requiredTrue,
   castTypeMessage,
 } = require('../utils/validatonMessages');
+const { clientErrorMessage } = require('../utils/errorsMessages');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -15,7 +16,7 @@ const userSchema = new mongoose.Schema({
     required: requiredTrue,
     validate: {
       validator: (v) => isEmail(v),
-      message: 'Неправильный формат почты',
+      message: clientErrorMessage.incorrectEmail,
     },
   },
   password: {
@@ -39,13 +40,13 @@ function findUserByCredentials(email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        throw new UnauthError('Неправильные почта или пароль');
+        throw new UnauthError(clientErrorMessage.emailOrPasswordError);
       }
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw new UnauthError('Неправильные почта или пароль');
+            throw new UnauthError(clientErrorMessage.emailOrPasswordError);
           }
 
           return user;

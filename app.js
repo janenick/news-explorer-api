@@ -9,6 +9,7 @@ const { MONGODB, PORT, allowedCors } = require('./config');
 const { limiter } = require('./middlewares/rateLimiter');
 const celebrateErrorHandler = require('./middlewares/celebrateValidation/celebrateErrorHandler');
 const errorHandler = require('./middlewares/errorHandler');
+const { serverErrorMessage } = require('./utils/errorsMessages');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // подключаемся к серверу mongo
@@ -38,7 +39,7 @@ app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error(serverErrorMessage.serserverFallError);
   }, 0);
 });
 

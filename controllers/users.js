@@ -6,6 +6,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const UnauthError = require('../errors/UnauthError');
 const ConflictError = require('../errors/ConflictError');
 const { errorHandler } = require('../errors');
+const { clientErrorMessage } = require('../utils/errorsMessages');
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -16,7 +17,7 @@ module.exports.getUsers = (req, res, next) => {
 module.exports.getUserById = (req, res, next) => {
   const { id } = req.params;
   User.findById(id)
-    .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
+    .orFail(() => { throw new NotFoundError(clientErrorMessage.notFoundUser); })
     .then((user) => res.status(200).send(user))
     .catch(next);
 };
@@ -24,7 +25,7 @@ module.exports.getUserById = (req, res, next) => {
 // контроллер getUserMe находит пользователя по token
 module.exports.getUserMe = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => { throw new NotFoundError('Пользователь не найден'); })
+    .orFail(() => { throw new NotFoundError(clientErrorMessage.notFoundUser); })
     .then((user) => res.status(200).send(user))
     .catch((err) => errorHandler(err, next));
 };
@@ -45,7 +46,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
-        next(new ConflictError('Пользователь с таким e-mail уже существует'));
+        next(new ConflictError(clientErrorMessage.conflictUser));
       } else {
         next(errorHandler(err, next));
       }
@@ -65,5 +66,5 @@ module.exports.login = (req, res, next) => {
         token,
       });
     })
-    .catch(() => next(new UnauthError('Введены неверное имя или пароль')));
+    .catch(() => next(new UnauthError(clientErrorMessage.emailOrPasswordError)));
 };

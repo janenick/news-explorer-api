@@ -2,6 +2,7 @@ const Article = require('../models/article');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const { errorHandler } = require('../errors');
+const { clientErrorMessage } = require('../utils/errorsMessages');
 
 module.exports.getArticles = (req, res, next) => {
   Article.find({})
@@ -39,13 +40,13 @@ module.exports.createArticle = (req, res, next) => {
 module.exports.deleteArticle = (req, res, next) => {
   const { articleId } = req.params;
   Article.findById(articleId)
-    .orFail(() => { throw new NotFoundError('Статья не найдена'); })
+    .orFail(() => { throw new NotFoundError(clientErrorMessage.forbiddenArticle); })
     .then((article) => {
       if (article.owner.toString() === req.user._id) {
         article.remove()
           .then((removeArticle) => res.status(200).send({ data: removeArticle }));
       } else {
-        throw new ForbiddenError('Вы не можете удалить данную статью');
+        throw new ForbiddenError(clientErrorMessage.forbiddenArticle);
       }
     })
     .catch(next);
