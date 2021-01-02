@@ -1,12 +1,11 @@
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const jwt = require('jsonwebtoken');
+const { JWT_SECRET, NODE_ENV } = require('../config');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthError = require('../errors/UnauthError');
 const ConflictError = require('../errors/ConflictError');
 const { errorHandler } = require('../errors');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
