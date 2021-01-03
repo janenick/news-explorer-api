@@ -28,14 +28,14 @@ app.use(cors({
   origin: allowedCors,
 }));
 
+// подключаем логгер запросов (его нужно подключить до всех обработчиков роутов)
+app.use(requestLogger);
+
 app.use(limiter); // rate-limiter для ограничения количество запросов с одного IP-адреса/ед. времени
 app.use(helmet()); // для простановки security-заголовков для API
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// подключаем логгер запросов (его нужно подключить до всех обработчиков роутов)
-app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -46,12 +46,8 @@ app.get('/crash-test', () => {
 app.use('/', router);
 
 app.use(errorLogger); // логгер ошибок (после обработчиков роутов и до обработчиков ошибок)
-// app.use(errors()); // обработчик ошибок celebrate
 app.use(celebrateErrorHandler); // обработчик ошибок celebrate
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  // Если всё работает, консоль покажет, какой порт приложение слушает
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT);

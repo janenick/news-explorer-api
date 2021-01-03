@@ -3,10 +3,6 @@ const { serverErrorMessage } = require('../utils/errorsMessages');
 const errorHandler = (err, req, res, next) => {
   // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err;
-  /* res
-    .status(statusCode)
-    .send(err);
-    */
   res
     .status(statusCode)
     .send({
