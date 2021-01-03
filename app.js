@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error(serverErrorMessage.serserverFallError);
+    throw new Error(serverErrorMessage.serverFallError);
   }, 0);
 });
 

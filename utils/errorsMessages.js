@@ -25,6 +25,6 @@ module.exports = {
   serverErrorMessage: {
     serverError: 'На сервере произошла ошибка',
     disconnectedError: 'Нет соединения с базой данных',
-    serserverFallError: 'Сервер сейчас упадёт',
+    serverFallError: 'Сервер сейчас упадёт',
   },
 };
