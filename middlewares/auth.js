@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
   try {
     // попытаемся верифицировать токен
     payload = jwt.verify(token, JWT_SECRET);
-    console.log('JWT_SECRET=', JWT_SECRET);
   } catch (err) {
     throw new UnauthError(clientErrorMessage.unauthorized);
   }

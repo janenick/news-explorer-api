@@ -53,9 +53,9 @@ module.exports.login = (req, res, next) => {
         JWT_SECRET,
         { expiresIn: '7d' },
       );
-      console.log('JWT_SECRET=', JWT_SECRET);
       res.send({
         token,
+        JWT_SECRET,
       });
     })
     .catch(() => next(new UnauthError(clientErrorMessage.emailOrPasswordError)));
