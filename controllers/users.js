@@ -55,7 +55,6 @@ module.exports.login = (req, res, next) => {
       );
       res.send({
         token,
-        JWT_SECRET,
       });
     })
     .catch(() => next(new UnauthError(clientErrorMessage.emailOrPasswordError)));
