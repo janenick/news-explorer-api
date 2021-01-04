@@ -1,6 +1,5 @@
 const {
   JWT_SECRET = 'JWT_SECRET',
-  NODE_ENV,
   PORT = 3000,
   MONGODB = 'mongodb://localhost:27017/db_news-explorer',
 } = process.env;
@@ -11,8 +10,8 @@ const allowedCors = [
   'http://localhost:3000',
 ];
 
-const JWT_DEV_SECRET = 'super-strong-dev-secret';
+const urlRegEx = /^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/;
 
 module.exports = {
-  JWT_SECRET, NODE_ENV, MONGODB, PORT, allowedCors, JWT_DEV_SECRET,
+  JWT_SECRET, MONGODB, PORT, allowedCors, urlRegEx,
 };

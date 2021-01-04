@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { urlRegEx } = require('../config');
 
 const {
   requiredTrue,
@@ -38,7 +39,7 @@ const articleSchema = new mongoose.Schema({
     required: requiredTrue,
     validate: {
       validator(v) {
-        return /^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/.test(v);
+        return urlRegEx.test(v);
       },
       message: linkErrorMessage, // когда validator вернёт false, будет использовано это сообщение
     },
@@ -49,7 +50,7 @@ const articleSchema = new mongoose.Schema({
     required: requiredTrue,
     validate: { // опишем свойство validate
       validator(v) {
-        return /^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/.test(v);
+        return urlRegEx.test(v);
       },
       message: linkErrorMessage, // когда validator вернёт false, будет использовано это сообщение
     },

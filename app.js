@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const { errors } = require('celebrate');
+const { errors } = require('celebrate');
 const helmet = require('helmet');
 require('dotenv').config();
 const { MONGODB, PORT, allowedCors } = require('./config');
@@ -46,7 +46,7 @@ app.get('/crash-test', () => {
 app.use('/', router);
 
 app.use(errorLogger); // логгер ошибок (после обработчиков роутов и до обработчиков ошибок)
-app.use(celebrateErrorHandler); // обработчик ошибок celebrate
+app.use(errors()); // обработчик ошибок celebrate
 
 app.use(errorHandler);
 

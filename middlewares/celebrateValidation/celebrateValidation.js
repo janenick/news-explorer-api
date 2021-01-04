@@ -1,4 +1,5 @@
 const { celebrate, Joi } = require('celebrate');
+const { urlRegEx } = require('../../config');
 
 const validateArticle = celebrate({
   body: Joi.object().keys({
@@ -7,8 +8,8 @@ const validateArticle = celebrate({
     text: Joi.string().required(),
     date: Joi.string().required(),
     source: Joi.string().required(),
-    link: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
-    image: Joi.string().pattern(/^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/).required(),
+    link: Joi.string().pattern(urlRegEx).required(),
+    image: Joi.string().pattern(urlRegEx).required(),
   }),
 });
 
