@@ -6,9 +6,9 @@ module.exports = (err, req, res, next) => {
   if (isCelebrateError(err)) {
     const customError = err.details.get('body') || err.details.get('params');
 
-    return res.status(400).send({
+    res.status(400).send({
       message: `${clientErrorMessage.validationError}: ${customError.message.replace(/"/g, '')}`,
     });
   }
-  return next(err);
+  next(err);
 };

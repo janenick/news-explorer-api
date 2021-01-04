@@ -1,7 +1,5 @@
 const Article = require('../models/article');
-const NotFoundError = require('../errors/NotFoundError');
-const ForbiddenError = require('../errors/ForbiddenError');
-const { errorHandler } = require('../errors');
+const { ForbiddenError, NotFoundError } = require('../errors');
 const { clientErrorMessage } = require('../utils/errorsMessages');
 
 module.exports.getArticles = (req, res, next) => {
@@ -43,7 +41,7 @@ module.exports.createArticle = (req, res, next) => {
       link: article.link,
       image: article.image,
     }))
-    .catch((err) => next(errorHandler(err, next)));
+    .catch(next);
 };
 
 module.exports.deleteArticle = (req, res, next) => {

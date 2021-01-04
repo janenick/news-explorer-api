@@ -3,7 +3,7 @@ const usersRouter = require('./users');
 const articlesRouter = require('./articles');
 const { login, createUser } = require('../controllers/users.js');
 const { validateUser, validateUserRegister } = require('../middlewares/celebrateValidation/celebrateValidation');
-const NotFoundError = require('../errors/NotFoundError');
+const { NotFoundError } = require('../errors');
 const { clientErrorMessage } = require('../utils/errorsMessages');
 
 const auth = require('../middlewares/auth');
