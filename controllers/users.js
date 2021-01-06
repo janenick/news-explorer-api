@@ -7,28 +7,18 @@ const {
 } = require('../errors');
 const { clientErrorMessage } = require('../utils/errorsMessages');
 
-module.exports.getUsers = (req, res, next) => {
-  User.find({})
-    .then((users) => res.status(200).send(users))
-    .catch(next);
-};
-
-module.exports.getUserById = (req, res, next) => {
-  const { id } = req.params;
-  User.findById(id)
-    .orFail(() => { throw new NotFoundError(clientErrorMessage.notFoundUser); })
-    .then((user) => res.status(200).send(user))
-    .catch(next);
-};
-
-// контроллер getUserMe находит пользователя по token
+// контроллер getUserMe находит пользователя по token (возвращает e-mail и имя)
 module.exports.getUserMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => { throw new NotFoundError(clientErrorMessage.notFoundUser); })
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.status(200).send({
+      email: user.email,
+      name: user.name,
+    }))
     .catch(next);
 };
 
+// контроллер createUser создает пользователя по переданным e-mail, имя, пароль
 module.exports.createUser = (req, res, next) => {
   const {
     email,
@@ -51,6 +41,7 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
+// контроллер login получает из запроса e-mail и пароль и проверяет их
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
