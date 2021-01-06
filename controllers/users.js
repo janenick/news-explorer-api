@@ -2,7 +2,9 @@ const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
 const User = require('../models/user');
-const { NotFoundError, UnauthError } = require('../errors');
+const {
+  ConflictError, NotFoundError, UnauthError,
+} = require('../errors');
 const { clientErrorMessage } = require('../utils/errorsMessages');
 
 module.exports.getUsers = (req, res, next) => {
@@ -41,7 +43,12 @@ module.exports.createUser = (req, res, next) => {
       email: user.email,
       name: user.name,
     }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        return next(new ConflictError(clientErrorMessage.conflictUser));
+      }
+      return next(err);
+    });
 };
 
 module.exports.login = (req, res, next) => {

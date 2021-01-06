@@ -8,12 +8,8 @@ const errorHandler = (err, req, res, next) => {
   };
 
   if (err.name === 'ValidationError') {
-    error.statusCode = 401;
+    error.statusCode = 400;
     error.message = err.message;
-  }
-  if (err.name === 'MongoError' && err.code === 11000) {
-    error.statusCode = 409;
-    error.message = clientErrorMessage.conflictUser;
   }
   if (err.name === 'CastError') {
     error.statusCode = 422;

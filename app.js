@@ -45,6 +45,7 @@ app.get('/crash-test', () => {
 app.use('/', router);
 
 app.use(errorLogger); // логгер ошибок (после обработчиков роутов и до обработчиков ошибок)
+// app.use(errors()); // стандартный обработчик ошибок celebrate
 app.use(celebrateErrorHandler); // обработчик ошибок celebrate
 
 app.use(errorHandler);
