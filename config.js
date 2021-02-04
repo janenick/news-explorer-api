@@ -8,6 +8,7 @@ const allowedCors = [
   'https://janenick-news-explorer.students.nomoredomains.monster',
   'http://janenick-news-explorer.students.nomoredomains.monster',
   'http://localhost:3000',
+  'http://localhost:3003',
 ];
 
 const urlRegEx = /^(https?:\/\/(www\.)?)[\w-]+\.[\w./():,-]+#?$/;
