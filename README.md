@@ -9,6 +9,8 @@ REST API: https://api.janenick-news-explorer.students.nomoredomains.monster
 
 Публичный IP: 178.154.229.238
 
+Ссылка на репозиторий фронтенда [News Explorer frontend(https://github.com/janenick/news-explorer-frontend)
+
 ---------------
 *Сервер для проекта News Explorer с использованием фреймворка Express (Node.js)*
 
